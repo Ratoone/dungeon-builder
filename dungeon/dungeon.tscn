@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://bo0cwkhh4xd5x"]
 
-[ext_resource type="Texture2D" uid="uid://dvdbjt17nsj0d" path="res://dungeon/assets/tiles/atlas_floor-16x16.png" id="1_lfwdv"]
+[ext_resource type="Texture2D" uid="uid://dvdbjt17nsj0d" path="res://assets/tiles/atlas_floor-16x16.png" id="1_lfwdv"]
 [ext_resource type="Script" path="res://dungeon/ui/CameraMovement.gd" id="1_m0dgt"]
-[ext_resource type="Texture2D" uid="uid://gpeev8xcfqh" path="res://dungeon/assets/tiles/autotile_template_3x3_minimal copy2.png" id="1_th52d"]
+[ext_resource type="Texture2D" uid="uid://gpeev8xcfqh" path="res://assets/tiles/autotile_template_3x3_minimal copy2.png" id="1_th52d"]
 [ext_resource type="Script" path="res://dungeon/layout/Terrain.gd" id="3_jbcud"]
 [ext_resource type="Texture2D" uid="uid://bltgpwkr81t35" path="res://icon.svg" id="5_1y4q2"]
-[ext_resource type="PackedScene" uid="uid://detc2km10psvj" path="res://creature/navigation.tscn" id="5_mchob"]
+[ext_resource type="PackedScene" uid="uid://detc2km10psvj" path="res://agents/navigation.tscn" id="5_mchob"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6n344"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)

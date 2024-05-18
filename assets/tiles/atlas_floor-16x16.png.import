@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gpeev8xcfqh"
-path="res://.godot/imported/autotile_template_3x3_minimal copy2.png-0e6686c6194678fcca8b21449968abe0.ctex"
+uid="uid://dvdbjt17nsj0d"
+path="res://.godot/imported/atlas_floor-16x16.png-d9f3a176c967e8d0bd30b12aad453e9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dungeon/assets/tiles/autotile_template_3x3_minimal copy2.png"
-dest_files=["res://.godot/imported/autotile_template_3x3_minimal copy2.png-0e6686c6194678fcca8b21449968abe0.ctex"]
+source_file="res://assets/tiles/atlas_floor-16x16.png"
+dest_files=["res://.godot/imported/atlas_floor-16x16.png-d9f3a176c967e8d0bd30b12aad453e9e.ctex"]
 
 [params]
 

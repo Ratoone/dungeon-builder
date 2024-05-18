@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StatsResource" load_steps=4 format=3 uid="uid://dw2n04m03xdug"]
+
+[ext_resource type="Script" path="res://agents/StatsResource.gd" id="1_oly43"]
+[ext_resource type="Texture2D" uid="uid://dvdbjt17nsj0d" path="res://assets/tiles/atlas_floor-16x16.png" id="2_mcehl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5dst"]
+atlas = ExtResource("2_mcehl")
+region = Rect2(48, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_oly43")
+sprite = SubResource("AtlasTexture_k5dst")
+might = 5
+dex = 2
+wits = 4

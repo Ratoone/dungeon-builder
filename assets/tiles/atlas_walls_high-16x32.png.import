@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgrlvcs2lk0pn"
-path="res://.godot/imported/16x16 dungeon ii wall reconfig v04 spritesheet.png-4b5916fdfef5169c928e22cf636a80bc.ctex"
+uid="uid://bb58sxo4vkjbk"
+path="res://.godot/imported/atlas_walls_high-16x32.png-88aab7d2fb263ad4af91884d3aa6f147.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dungeon/assets/tiles/16x16 dungeon ii wall reconfig v04 spritesheet.png"
-dest_files=["res://.godot/imported/16x16 dungeon ii wall reconfig v04 spritesheet.png-4b5916fdfef5169c928e22cf636a80bc.ctex"]
+source_file="res://assets/tiles/atlas_walls_high-16x32.png"
+dest_files=["res://.godot/imported/atlas_walls_high-16x32.png-88aab7d2fb263ad4af91884d3aa6f147.ctex"]
 
 [params]
 

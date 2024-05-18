@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb58sxo4vkjbk"
-path="res://.godot/imported/atlas_walls_high-16x32.png-2e700e2c329580b680097b1d71bbb3e6.ctex"
+uid="uid://c6j13unm0ium8"
+path="res://.godot/imported/atlas_walls_low-16x16.png-a15393f77ff47e86d369ebf91be8d95e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dungeon/assets/tiles/atlas_walls_high-16x32.png"
-dest_files=["res://.godot/imported/atlas_walls_high-16x32.png-2e700e2c329580b680097b1d71bbb3e6.ctex"]
+source_file="res://assets/tiles/atlas_walls_low-16x16.png"
+dest_files=["res://.godot/imported/atlas_walls_low-16x16.png-a15393f77ff47e86d369ebf91be8d95e.ctex"]
 
 [params]
 

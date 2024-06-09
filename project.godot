@@ -39,6 +39,7 @@ click={
 
 2d_physics/layer_1="Wall"
 2d_navigation/layer_1="Floor"
+2d_physics/layer_2="Trap"
 
 [rendering]
 

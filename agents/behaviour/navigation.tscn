@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://detc2km10psvj"]
 
-[ext_resource type="Script" path="res://agents/Navigation.gd" id="1_i6ygt"]
+[ext_resource type="Script" path="res://agents/behaviour/Navigation.gd" id="1_o0rnl"]
 
 [node name="Navigation" type="Node2D"]
-script = ExtResource("1_i6ygt")
+script = ExtResource("1_o0rnl")
 movement_speed = 10.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

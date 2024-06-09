@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://kwcfmy064a45"]
+
+[ext_resource type="Script" path="res://agents/trap/BasicTrap.gd" id="1_joarw"]
+[ext_resource type="Resource" uid="uid://dw2n04m03xdug" path="res://agents/trap/templates/SpikeTrap.tres" id="2_77bny"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbeol"]
+size = Vector2(16, 16)
+
+[node name="BasicTrap" type="Node2D"]
+script = ExtResource("1_joarw")
+template = ExtResource("2_77bny")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_pbeol")

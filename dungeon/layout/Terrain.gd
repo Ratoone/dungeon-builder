@@ -4,7 +4,7 @@ extends Node2D
 @export var max_height: int
 @export var max_width: int
 
-var layout: Array[DungeonTile] = [
+var base_layout: Array[DungeonTile] = [
 	DungeonTile.new("floor", Vector2i(-10, -10)), 
 	DungeonTile.new("floor", Vector2i(-10, 10)), 
 	DungeonTile.new("floor", Vector2i(10, 10)), 
@@ -14,7 +14,7 @@ var layout: Array[DungeonTile] = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	#generate_layout(layout)
+	#generate_layout(base_layout)
 	
 
 func generate_layout(layout: Array[DungeonTile]):

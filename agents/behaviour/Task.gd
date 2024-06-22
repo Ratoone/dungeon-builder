@@ -13,7 +13,7 @@ var state: State
 func run() -> State:
 	if self.state == State.FRESH:
 		setup()
-	self.state = State.RUNNING
+		self.state = State.RUNNING
 	process()
 	return self.state
 	

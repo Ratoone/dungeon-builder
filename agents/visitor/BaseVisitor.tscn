@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://rsqxcdee4cu2"]
+[gd_scene load_steps=13 format=3 uid="uid://rsqxcdee4cu2"]
 
 [ext_resource type="PackedScene" uid="uid://detc2km10psvj" path="res://agents/behaviour/navigation.tscn" id="1_8fgja"]
 [ext_resource type="Script" path="res://agents/visitor/BaseVisitor.gd" id="1_ptycf"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3d5le"]
-size = Vector2(16, 16)
+[ext_resource type="Script" path="res://agents/behaviour/Blackboard.gd" id="2_tbghm"]
+[ext_resource type="Script" path="res://agents/behaviour/composite/Sequence.gd" id="3_1yc5f"]
+[ext_resource type="Script" path="res://agents/behaviour/composite/Selector.gd" id="3_qvuav"]
+[ext_resource type="Script" path="res://agents/behaviour/composite/Parallel.gd" id="4_qfubq"]
+[ext_resource type="Script" path="res://agents/behaviour/decorator/Repeat.gd" id="5_m0v50"]
+[ext_resource type="Script" path="res://agents/behaviour/leaf/MoveTowards.gd" id="8_ogg74"]
+[ext_resource type="Script" path="res://agents/behaviour/leaf/ChooseTrap.gd" id="8_ujqyb"]
+[ext_resource type="Script" path="res://agents/behaviour/leaf/WaitFor.gd" id="9_atj84"]
 
 [sub_resource type="Gradient" id="Gradient_g2147"]
 colors = PackedColorArray(0.915775, 1.44392e-06, 8.66354e-07, 1, 5.0056e-06, 0.732439, 7.70092e-07, 1)
@@ -17,16 +22,12 @@ height = 4
 [node name="BaseVisitor" type="Node2D"]
 script = ExtResource("1_ptycf")
 
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("2_tbghm")
+
 [node name="Navigation" parent="." instance=ExtResource("1_8fgja")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_3d5le")
 
 [node name="StaminaBar" type="TextureProgressBar" parent="."]
 offset_left = -12.0
@@ -35,4 +36,54 @@ offset_right = 12.0
 offset_bottom = 12.0
 texture_progress = SubResource("GradientTexture2D_755le")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_trap_triggered"]
+[node name="Selector - explore Floor" type="Node" parent="."]
+script = ExtResource("3_qvuav")
+
+[node name="Parallel - while Stamina" type="Node" parent="Selector - explore Floor"]
+script = ExtResource("4_qfubq")
+
+[node name="Repeat - each door" type="Node" parent="Selector - explore Floor/Parallel - while Stamina" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("5_m0v50")
+repeat_times_key = "n_rooms"
+blackboard = NodePath("../../../Blackboard")
+
+[node name="Sequence" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door"]
+script = ExtResource("3_1yc5f")
+
+[node name="Repeat - each trap" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("5_m0v50")
+repeat_times_key = "n_traps"
+finished_one_event = "trap_done"
+blackboard = NodePath("../../../../../Blackboard")
+
+[node name="Sequence - solve trap" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Repeat - each trap"]
+script = ExtResource("3_1yc5f")
+
+[node name="ChooseTrap" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Repeat - each trap/Sequence - solve trap" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("8_ujqyb")
+blackboard = NodePath("../../../../../../../Blackboard")
+
+[node name="MoveTowards" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Repeat - each trap/Sequence - solve trap" node_paths=PackedStringArray("navigation", "blackboard")]
+script = ExtResource("8_ogg74")
+navigation = NodePath("../../../../../../../Navigation")
+blackboard = NodePath("../../../../../../../Blackboard")
+target_key = "trap_location"
+
+[node name="WaitFor" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Repeat - each trap/Sequence - solve trap" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("9_atj84")
+waiting_time_key = "trap_duration"
+blackboard = NodePath("../../../../../../../Blackboard")
+
+[node name="Sequence - solve door" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence"]
+script = ExtResource("3_1yc5f")
+
+[node name="MoveTowards" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Sequence - solve door" node_paths=PackedStringArray("navigation", "blackboard")]
+script = ExtResource("8_ogg74")
+navigation = NodePath("../../../../../../Navigation")
+blackboard = NodePath("../../../../../../Blackboard")
+target_key = "door_location"
+
+[node name="WaitFor" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence/Sequence - solve door" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("9_atj84")
+waiting_time_key = "door_duration"
+blackboard = NodePath("../../../../../../Blackboard")

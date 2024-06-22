@@ -1,4 +1,5 @@
 extends Node2D
+class_name DungeonLayout
 
 @export var tile_map: TileMap
 @export var max_height: int
@@ -10,6 +11,9 @@ var base_layout: Array[DungeonTile] = [
 	DungeonTile.new("floor", Vector2i(10, 10)), 
 	DungeonTile.new("floor", Vector2i(10, -10))
 ]
+
+var exit: Vector2i = Vector2i(0, 9)
+@export var traps: Array[BasicTrap]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,3 +40,14 @@ func _unhandled_input(_event):
 	var clicked_pos: Vector2i = tile_map.local_to_map(get_local_mouse_position())
 	BetterTerrain.set_cell(tile_map, 0, clicked_pos, 1)
 	BetterTerrain.update_terrain_cell(tile_map, 0, clicked_pos)
+
+func closest_trap(from: Vector2i) -> BasicTrap:
+	var min_dist = 9999.0
+	var index = 0
+	for i in range(len(traps)):
+		var dist = (tile_map.local_to_map(traps[i].global_position) - from).length()
+		if dist < min_dist:
+			min_dist = dist
+			index = i
+			
+	return traps[index]

@@ -11,6 +11,7 @@ var new_velocity: Vector2 = Vector2.ZERO
 
 func _physics_process(delta):
 	if is_arrived():
+		new_velocity = Vector2.ZERO
 		return
 
 	movement_delta = movement_speed * delta

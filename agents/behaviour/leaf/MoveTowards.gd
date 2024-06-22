@@ -3,14 +3,16 @@ class_name MoveTowards
 
 @export var navigation: Navigation
 @export var blackboard: Blackboard
-
-var target_cell: Vector2i
+@export var target_key: String
 	
 func setup():
-	target_cell = blackboard.get_key("target_cell")
+	var target_cell: Vector2i = blackboard.get_key(target_key)
 	navigation.set_target_cell(target_cell)
 	
 func process():
 	if navigation.is_arrived():
 		self.state = State.SUCCEEDED
-		blackboard.remove_key("target_cell")
+		blackboard.remove_key(target_key)
+
+func find_cell() -> Vector2i:
+	return Vector2i.ZERO

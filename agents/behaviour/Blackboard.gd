@@ -10,4 +10,4 @@ func remove_key(key: String):
 	data.erase(key)
 
 func get_key(key: String):
-	data.get(key)
+	return data.get(key)

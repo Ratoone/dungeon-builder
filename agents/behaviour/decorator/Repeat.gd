@@ -9,6 +9,7 @@ var repeats = 0
 var limit = 0
 
 func setup():
+	assert(get_child_count() == 1)
 	limit = blackboard.get_key(repeat_times_key)
 	get_child(0).start()
 
@@ -19,7 +20,8 @@ func process():
 		
 	if child_state == State.SUCCEEDED:
 		repeats += 1
-		if finished_one_event != null:
+		get_child(0).start()
+		if !finished_one_event.is_empty():
 			blackboard.emit_signal(finished_one_event)
 		if repeats >= limit:
 			repeats = 0

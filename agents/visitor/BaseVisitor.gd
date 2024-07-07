@@ -10,6 +10,8 @@ class_name BaseVisitor
 @export var tile_map: TileMap
 @export var layout: DungeonLayout
 
+var current_floor = 0
+
 var stamina:float : 
 	get:
 		return stamina
@@ -19,16 +21,10 @@ var stamina:float :
 		blackboard.add_key("stamina_percentage", stamina_bar.value)
 
 func _ready():
-	blackboard.add_key("current_floor", 1)
-	blackboard.add_key("n_rooms", 1)
-	blackboard.add_key("n_traps", 1)
-	blackboard.add_key("door_location", Vector2i(0, 0))
-	blackboard.add_key("door_duration", 0.1)
-	blackboard.add_key("traps", layout.traps.map(func (trap): return {
-		"location": tile_map.local_to_map(trap.global_position),
-		"duration": 1,
-		"stamina": ChallengeUtils.attempt_skill(template.challenge_stats, trap.template).stamina_use
-	}))
+	blackboard.add_key("stats", template.challenge_stats)
+	blackboard.add_key("stamina_rate", 0.4)
+	blackboard.add_key("doors", layout.doors_on_floor(current_floor))
+	blackboard.add_key("n_rooms", blackboard.get_key("doors").size())
 	blackboard.add_user_signal("trap_done")
 	blackboard.connect("trap_done", _on_trap_finished)
 	stamina = template.stamina
@@ -37,21 +33,17 @@ func _ready():
 	$Sprite2D.texture = template.challenge_stats.sprite
 	behaviour_tree.start()
 	
-func _process(delta):
-	blackboard.add_key("location", tile_map.local_to_map(global_position))
+func _process(_delta):
 	var state = behaviour_tree.run()
+	if blackboard.get_key("animation") != null:
+		$AnimationPlayer.play(blackboard.get_key("animation"))
 	if state == behaviour_tree.State.SUCCEEDED:
 		queue_free()
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	global_position = navigation.step_movement()
 
-func _on_trap_triggered(trap_area):
-	var trap: BasicTrap = trap_area.get_owner()
-	var skill: SkillUse = ChallengeUtils.attempt_skill(template.challenge_stats, trap.template)
-	stamina -= skill.stamina_use
-
 func _on_trap_finished():
-	var stamina = blackboard.get_key("trap_stamina")
-	self.stamina -= stamina
+	var stamina_use: float = blackboard.get_key("trap_stamina")
+	self.stamina -= stamina_use
 	blackboard.remove_key("trap_stamina")

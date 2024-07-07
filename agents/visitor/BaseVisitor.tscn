@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://rsqxcdee4cu2"]
+[gd_scene load_steps=20 format=3 uid="uid://rsqxcdee4cu2"]
 
 [ext_resource type="PackedScene" uid="uid://detc2km10psvj" path="res://agents/behaviour/navigation.tscn" id="1_8fgja"]
 [ext_resource type="Script" path="res://agents/visitor/BaseVisitor.gd" id="1_ptycf"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://agents/behaviour/composite/Selector.gd" id="3_qvuav"]
 [ext_resource type="Script" path="res://agents/behaviour/composite/Parallel.gd" id="4_qfubq"]
 [ext_resource type="Script" path="res://agents/behaviour/decorator/Repeat.gd" id="5_m0v50"]
+[ext_resource type="Script" path="res://agents/behaviour/leaf/ChooseDoor.gd" id="8_it1k0"]
 [ext_resource type="Script" path="res://agents/behaviour/leaf/MoveTowards.gd" id="8_ogg74"]
 [ext_resource type="Script" path="res://agents/behaviour/leaf/ChooseTrap.gd" id="8_ujqyb"]
 [ext_resource type="Script" path="res://agents/behaviour/leaf/WaitFor.gd" id="9_atj84"]
@@ -19,6 +20,90 @@ gradient = SubResource("Gradient_g2147")
 width = 24
 height = 4
 
+[sub_resource type="Animation" id="Animation_m76t7"]
+resource_name = "DEX"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [16, 23]
+}
+
+[sub_resource type="Animation" id="Animation_j0fhr"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 7]
+}
+
+[sub_resource type="Animation" id="Animation_6iney"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_exikl"]
+resource_name = "MIGHT"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [8, 15]
+}
+
+[sub_resource type="Animation" id="Animation_32ytj"]
+resource_name = "WITS"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [24, 31]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o5ody"]
+_data = {
+"DEX": SubResource("Animation_m76t7"),
+"MIGHT": SubResource("Animation_exikl"),
+"MOVE": SubResource("Animation_j0fhr"),
+"RESET": SubResource("Animation_6iney"),
+"WITS": SubResource("Animation_32ytj")
+}
+
 [node name="BaseVisitor" type="Node2D"]
 script = ExtResource("1_ptycf")
 
@@ -28,6 +113,8 @@ script = ExtResource("2_tbghm")
 [node name="Navigation" parent="." instance=ExtResource("1_8fgja")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+hframes = 8
+vframes = 4
 
 [node name="StaminaBar" type="TextureProgressBar" parent="."]
 offset_left = -12.0
@@ -35,6 +122,11 @@ offset_top = 8.0
 offset_right = 12.0
 offset_bottom = 12.0
 texture_progress = SubResource("GradientTexture2D_755le")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o5ody")
+}
 
 [node name="Selector - explore Floor" type="Node" parent="."]
 script = ExtResource("3_qvuav")
@@ -49,6 +141,10 @@ blackboard = NodePath("../../../Blackboard")
 
 [node name="Sequence" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door"]
 script = ExtResource("3_1yc5f")
+
+[node name="ChooseDoor" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence" node_paths=PackedStringArray("blackboard")]
+script = ExtResource("8_it1k0")
+blackboard = NodePath("../../../../../Blackboard")
 
 [node name="Repeat - each trap" type="Node" parent="Selector - explore Floor/Parallel - while Stamina/Repeat - each door/Sequence" node_paths=PackedStringArray("blackboard")]
 script = ExtResource("5_m0v50")

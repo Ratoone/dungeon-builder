@@ -1,16 +1,12 @@
-[gd_resource type="Resource" script_class="VisitorStats" load_steps=6 format=3 uid="uid://claebj1uljjgi"]
+[gd_resource type="Resource" script_class="VisitorStats" load_steps=5 format=3 uid="uid://claebj1uljjgi"]
 
 [ext_resource type="Script" path="res://agents/visitor/VisitorStats.gd" id="1_6k64r"]
 [ext_resource type="Script" path="res://agents/ChallengeStats.gd" id="1_q6405"]
-[ext_resource type="Texture2D" uid="uid://dvdbjt17nsj0d" path="res://assets/tiles/atlas_floor-16x16.png" id="2_capnp"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qbgti"]
-atlas = ExtResource("2_capnp")
-region = Rect2(16, 80, 16, 16)
+[ext_resource type="Texture2D" uid="uid://cy358c8ffpcc" path="res://assets/characters/walk.png" id="2_yfx6e"]
 
 [sub_resource type="Resource" id="Resource_5dvni"]
 script = ExtResource("1_q6405")
-sprite = SubResource("AtlasTexture_qbgti")
+sprite = ExtResource("2_yfx6e")
 might = 6
 dex = 3
 wits = 1
@@ -18,5 +14,5 @@ wits = 1
 [resource]
 script = ExtResource("1_6k64r")
 challenge_stats = SubResource("Resource_5dvni")
-speed = 8
+speed = 40.0
 stamina = 20

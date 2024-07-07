@@ -8,6 +8,7 @@ class_name MoveTowards
 func setup():
 	var target_cell: Vector2i = blackboard.get_key(target_key)
 	navigation.set_target_cell(target_cell)
+	blackboard.add_key("animation", "MOVE")
 	
 func process():
 	if navigation.is_arrived():

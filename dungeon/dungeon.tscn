@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bo0cwkhh4xd5x"]
+[gd_scene load_steps=13 format=3 uid="uid://bo0cwkhh4xd5x"]
 
 [ext_resource type="Texture2D" uid="uid://dvdbjt17nsj0d" path="res://assets/tiles/atlas_floor-16x16.png" id="1_lfwdv"]
 [ext_resource type="Script" path="res://ui/CameraMovement.gd" id="1_m0dgt"]
@@ -9,6 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://kwcfmy064a45" path="res://agents/trap/BasicTrap.tscn" id="7_k65k1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6n344"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2fts3"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
@@ -73,6 +80,10 @@ texture = ExtResource("1_lfwdv")
 "type": 1
 }
 2:2/0 = 0
+2:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2fts3")
+2:2/0/metadata/_better_terrain = {
+"type": 2
+}
 3:2/0 = 0
 4:2/0 = 0
 5:2/0 = 0
@@ -496,12 +507,14 @@ metadata/_better_terrain = {
 "source_id": 0
 }], ["Floor", Color(0.813036, 0.226864, 0.27925, 1), 0, [], {
 "path": ""
+}], ["Exit", Color(0.47595, 0.266582, 0.646714, 1), 0, [], {
+"coord": Vector2i(2, 2),
+"source_id": 0
 }]],
 "version": "0.2"
 }
 
 [node name="Dungeon" type="Node2D"]
-y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(1, 77)
